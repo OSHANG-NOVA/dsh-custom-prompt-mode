@@ -130,12 +130,13 @@ POST 的 body 动作：
 | `client.js` | 浏览器半：`settings.section` 设置页（提示词 + 工具勾选 + 汉化面板） |
 | `cordis.patch.yml` | 插入根行 `custom-prompt-mode` |
 | `locale/*.json` | 插件标题与描述 |
+| `DEVELOPMENT.md` | 维护者文档：junction、重载、编码陷阱、本地自检 |
 
 ## 注意
 
 - 这是**全局**插件：装一次，所有会话的模式列表里都能选到 Custom prompt。
 - 若某个会话已经开始对话，DSH 不允许再切换模式（`agent-preset/locked`），新建会话即可。
-- 改了源码要重启 DSH 进程才生效：本 profile 没启用模块热更（`dsh-base` 的 `hmr` 行 `root: []`），ESM 模块按 URL 缓存。
+- 改了源码要重启 DSH 进程才生效：本 profile 没启用模块热更（`dsh-base` 的 `hmr` 行 `root: []`），ESM 模块按 URL 缓存。细节见 [DEVELOPMENT.md](DEVELOPMENT.md)。
 
 ## License
 
