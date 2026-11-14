@@ -42,9 +42,31 @@
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 /** `tools` is only needed for the catalogue scan; the rest are hard requirements. */
 export const inject = ['webServer', 'agentPresets', 'tools'];
+
+/**
+ * This package's own name, read from its manifest.
+ *
+ * The preset's child rows name the persona and gate subpaths as bare
+ * specifiers, and the Loader resolves those from the package that mounted the
+ * preset. Hard-coding a name would break every other install shape — a local
+ * `link:`, an npm tarball, or a scoped fork — so the name is taken from the
+ * manifest that is actually on disk. `import.meta.url` resolves symlinks, so
+ * this reads the real package root either way.
+ */
+const PACKAGE_ROOT = dirname(fileURLToPath(import.meta.url));
+const PACKAGE_NAME = (() => {
+  try {
+    const parsed = JSON.parse(readFileSync(join(PACKAGE_ROOT, 'package.json'), 'utf8'));
+    if (typeof parsed?.name === 'string' && parsed.name.trim() !== '') return parsed.name.trim();
+  } catch {
+    /* a malformed manifest must not take the whole plugin down */
+  }
+  return 'dsh-custom-prompt-mode';
+})();
 
 /** Route base; the settings page posts to exactly this path. */
 const API_PREFIX = '/custom-prompt-mode/api';
@@ -71,10 +93,10 @@ const DEFAULT_PROMPT = [
 const PRESET_ID = 'custom-prompt';
 
 /** Where the persona half lives inside this package. */
-const PERSONA_MODULE = '@local/dsh-custom-prompt-mode/persona';
+const PERSONA_MODULE = `${PACKAGE_NAME}/persona`;
 
 /** Where the gate half lives inside this package. */
-const GATE_MODULE = '@local/dsh-custom-prompt-mode/gate';
+const GATE_MODULE = `${PACKAGE_NAME}/gate`;
 
 /** Reserved PTC transport; `restrict()` refuses to name it. */
 const RESERVED_TOOL = 'run_code';

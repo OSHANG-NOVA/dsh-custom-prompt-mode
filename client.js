@@ -12,7 +12,7 @@
  * builds its own controls and styles them with `--dsw-alias-*` theme tokens.
  */
 window.__ModuleLoader__.load({
-  id: '@local/dsh-custom-prompt-mode',
+  id: 'dsh-custom-prompt-mode',
   factory: (require) => {
     var module = { exports: {} };
     var exports = module.exports;
@@ -740,7 +740,7 @@ window.__ModuleLoader__.load({
 
       ctx.effect(() => {
         const tag = document.createElement('style');
-        tag.dataset.plugin = '@local/dsh-custom-prompt-mode';
+        tag.dataset.plugin = 'dsh-custom-prompt-mode';
         tag.dataset.pluginCss = 'custom-prompt-mode';
         tag.textContent = css;
         document.head.appendChild(tag);

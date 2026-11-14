@@ -1,9 +1,27 @@
 {
-  "name": "@local/dsh-custom-prompt-mode",
+  "name": "dsh-custom-prompt-mode",
   "version": "1.0.0",
-  "private": true,
   "type": "module",
   "description": "Custom prompt 模式：用你自己写的系统提示词完全替换 DSH 的内置 System Prompt；自动扫描已安装插件的工具并逐项开关，工具说明可按所选模型汉化。",
+  "license": "MIT",
+  "author": "OSHANG-NOVA",
+  "homepage": "https://github.com/OSHANG-NOVA/dsh-custom-prompt-mode#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OSHANG-NOVA/dsh-custom-prompt-mode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OSHANG-NOVA/dsh-custom-prompt-mode/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis",
+    "agent-preset",
+    "system-prompt",
+    "custom-prompt"
+  ],
   "icon": "./icon.svg",
   "exports": {
     ".": "./index.js",
