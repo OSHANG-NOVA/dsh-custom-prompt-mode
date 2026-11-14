@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Custom prompt 模式",
+    "description": "新增 Custom prompt 模式：系统提示词完全由你在设置页写的文本替换；工具自动扫描已安装插件并逐项开关，工具说明可按所选模型汉化。"
+  }
+}

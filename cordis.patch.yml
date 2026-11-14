@@ -1,0 +1,3 @@
+- insert:
+    - id: custom-prompt-mode
+      name: '@local/dsh-custom-prompt-mode'

@@ -1,0 +1,40 @@
+{
+  "name": "@local/dsh-custom-prompt-mode",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Custom prompt 模式：用你自己写的系统提示词完全替换 DSH 的内置 System Prompt；自动扫描已安装插件的工具并逐项开关，工具说明可按所选模型汉化。",
+  "icon": "./icon.svg",
+  "exports": {
+    ".": "./index.js",
+    "./persona": "./persona.js",
+    "./gate": "./gate.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings"
+      ]
+    }
+  },
+  "files": [
+    "index.js",
+    "persona.js",
+    "gate.js",
+    "client.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "locale/*.json",
+    "README.md"
+  ]
+}

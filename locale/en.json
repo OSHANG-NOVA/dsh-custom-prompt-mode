@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Custom prompt mode",
+    "description": "Adds a Custom prompt mode whose system prompt is exactly the text you write in its settings page; tools are discovered by scanning the installed plugins, switched individually, and their descriptions can be summarised in Chinese by the model you pick."
+  }
+}
