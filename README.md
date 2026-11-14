@@ -1,6 +1,7 @@
 # dsh-custom-prompt-mode
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/v/dsh-custom-prompt-mode.svg)](https://www.npmjs.com/package/dsh-custom-prompt-mode)
 
 一个 DeepSeek Harness 插件，新增 **Custom prompt 模式**：该模式会话的系统提示词完全由你在设置页里写的文本替换，DSH 内置的 System Prompt 一律不生效；工具也不写死，而是**自动扫描**当前 profile 实际挂载的工具，逐项开关，说明还能用你选的模型自动汉化。
 
@@ -8,7 +9,7 @@
 
 两种装法，任选一种：
 
-**从 npm 安装**（推荐，发布后可用）
+**从 npm 安装**（推荐）
 
 ```
 plugin_manager install_bundle  target=dsh-custom-prompt-mode

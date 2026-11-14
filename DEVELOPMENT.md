@@ -120,3 +120,35 @@ POST http://127.0.0.1:51903/preset-studio/api
 返回 JSON 的顶层键是 `presets`，每个预设的 `rows` 字段每行包含
 `entryId` / `moduleName` / `enabled` / `fiberState`。`fiberState: 2` 表示已激活；
 `enabled: false` 是平台条件（例如 Windows 上 bash 分支）被正确禁用，不是错误。
+
+## 发布到 npm
+
+```powershell
+# 本机 npm_config_registry 指向 npmmirror，发布前必须覆盖，否则推到镜像站
+$env:npm_config_registry = 'https://registry.npmjs.org'
+
+cd C:\Users\Administrator\Documents\new1\dsh-custom-prompt-mode
+npm publish --registry https://registry.npmjs.org
+```
+
+账号开了 2FA，`npm publish` 会克隆一个浏览器确认页；若提示要一次性口令，加 `--otp=六位数`。
+
+### 关于 registry 上的 `0.0.0-stage`
+
+首次发布时 npm 的 staged publishing 会先写一条占位版本 `0.0.0-stage`
+（描述 `Temporary package placeholder for staged publishing`），随后真实版本才写入。
+`dist-tags.latest` 始终指向真实版本，所以 `npm i dsh-custom-prompt-mode` 拿到的是
+正确的那个；占位版本只是版本列表里多出来的一条，不需要清理，也无法删除。
+
+发布后核对：
+
+```powershell
+$u = 'https://registry.npmjs.org/dsh-custom-prompt-mode?t=' + [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+$r = Invoke-RestMethod -Uri $u -Headers @{ 'Cache-Control' = 'no-cache' }
+$r.'dist-tags'                                  # latest 必须是真实版本
+$r.versions.PSObject.Properties.Name            # 版本清单
+$r.versions.'1.0.0'.dist.shasum                 # 应与本地 npm pack 的 shasum 一致
+```
+
+`registry.npmjs.org` 的读取有缓存，刚发布完可能要等十几秒，`?t=` 参数可以绕过。
+
