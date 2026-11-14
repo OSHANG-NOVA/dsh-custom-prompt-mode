@@ -23,6 +23,10 @@
     "custom-prompt"
   ],
   "icon": "./icon.svg",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
   "exports": {
     ".": "./index.js",
     "./persona": "./persona.js",
