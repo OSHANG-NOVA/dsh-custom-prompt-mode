@@ -11,9 +11,20 @@
  * Written without `@deepseek-ai/dsh-client-ui-primitives`: a third-party plugin
  * builds its own controls and styles them with `--dsw-alias-*` theme tokens.
  */
-window.__ModuleLoader__.load({
-  id: 'dsh-custom-prompt-mode',
-  factory: (require) => {
+/**
+ * Module ids this browser half answers to.
+ *
+ * The client module graph takes its id from the package name a host resolves
+ * the loader row through, and that name differs by install form: an npm or
+ * junction install resolves `dsh-custom-prompt-mode`, while a profile that
+ * still links the package under its old scoped name resolves
+ * `@local/dsh-custom-prompt-mode`. Registering both keeps either install
+ * working; a graph that only asks for one leaves the other factory unused.
+ */
+const CANONICAL_ID = 'dsh-custom-prompt-mode';
+const ALIAS_ID = '@local/dsh-custom-prompt-mode';
+
+function defineBundle(require) {
     var module = { exports: {} };
     var exports = module.exports;
     Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
@@ -759,5 +770,21 @@ window.__ModuleLoader__.load({
     exports.inject = inject;
     exports.apply = apply;
     return module.exports;
-  },
-});
+}
+
+/* One factory per id: the module system rejects a second registration of the
+   same id, but an id the graph never asks for is simply left in the table.
+   Each registration is guarded on its own so a page that executes this bundle
+   twice (a combo batch followed by the one-resource fallback, or an
+   invalidation race) keeps whichever registration landed first instead of
+   failing the boot audit. */
+const loader = window.__ModuleLoader__;
+for (const id of [CANONICAL_ID, ALIAS_ID]) {
+  try {
+    loader.load({ id, factory: defineBundle });
+  } catch (error) {
+    const duplicate = error instanceof Error
+      && error.message.includes('duplicate factory registration');
+    if (!duplicate) console.error(`[custom-prompt-mode] could not register "${id}":`, error);
+  }
+}
