@@ -6,7 +6,15 @@
 
 ## 安装
 
-把本仓库放到任意目录，然后让 DSH 安装它：
+两种装法，任选一种：
+
+**从 npm 安装**（推荐，发布后可用）
+
+```
+plugin_manager install_bundle  target=dsh-custom-prompt-mode
+```
+
+**从源码安装**：把本仓库放到任意目录，然后让 DSH 安装它
 
 ```
 plugin_manager install_bundle  target=<本仓库的绝对路径>
